@@ -187,7 +187,10 @@ bool AWSAuthV4Signer::SignRequest(Aws::Http::HttpRequest& request, bool signBody
     {
         request.SetHeaderValue("x-amz-content-sha256", payloadHash);
     }
-    request.SetHeaderValue("host", "mtmss.com");
+    if (request.GetHeaderValue("host") == "mtmss.vip.sankuai.com")
+    {
+          request.SetHeaderValue("host","mtmss.com");
+    }
     //calculate date header to use in internal signature (this also goes into date header).
     DateTime now = GetSigningTimestamp();
     Aws::String dateHeaderValue = now.ToGmtString(LONG_DATE_FORMAT_STR);
